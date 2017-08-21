@@ -46,7 +46,7 @@ const bathroom = {
     items: [ 'ping pong ball' ]
 };
 
-const rooms = [ bathroom, garage, kitchen, livingRoom, frontYard, backYard ];
+const rooms = [ frontYard, bathroom, garage, kitchen, livingRoom, backYard ];
 
 rooms.forEach(room => {
     room.exits = room.exits.map( exit => {

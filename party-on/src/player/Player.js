@@ -1,5 +1,5 @@
 const Player = {
-    name,
+    name: '',
     items: [],
     beer: false,
     actions: []
