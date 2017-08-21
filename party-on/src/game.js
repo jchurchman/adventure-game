@@ -6,21 +6,21 @@ class Game extends React.Component {
         super();
         this.state = {
             history: [{
-                squares: Array(16).fill('#d3d3d3'),
+                squares: starterBoards[Math.floor(Math.random()*5)],
             }],
-            xIsNext: true,
-            stepNumber: 0
+            stepNumber: 0,
+            puzzlesSolved: 0
         };
     }
-	
+
     handleClick(i){
         const history = this.state.history;
         const current = history[history.length - 1];
         const squares = current.squares.slice();
 		
-        // if(checkSolution(squares)) {
-        //     return;
-        // }
+        if(checkSolution(squares) === 'winner') {
+            return;
+        }
 
         if(squares[i] === '#d3d3d3') {
             squares[i] = '#0000ff';
@@ -37,14 +37,21 @@ class Game extends React.Component {
                 squares: squares,
             }]),
             stepNumber: history.length,
-            xIsNext: !this.state.xIsNext
         });
     }
-	
+    
+    solved(){
+        let figuredOut = this.state.puzzlesSolved + 1;
+        this.setState({
+            puzzlesSolved: figuredOut,
+        });
+    }
+
     jumpTo(step){
+        const timeWarp = this.state.history.slice(0, (step) ? step : 1);
         this.setState({
             stepNumber: step,
-            xIsNext: (step % 2) === 0,
+            history: timeWarp
         });
     }
 	
@@ -65,12 +72,10 @@ class Game extends React.Component {
         });
         let status;
 		
-        if(winner) {
+        if(winner === 'winner') {
             status = 'winner:' + winner;
         }
-        else{
-            status = 'Next player:' + (this.state.xIsNext ? 'x' : 'o');
-        }
+        
         return (
             <div className="game">
                 <div className="game-board">
@@ -80,8 +85,10 @@ class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
+                    <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
                     <div>{status}</div>
                     <ol>{moves}</ol>
+                    <button onClick={() => this.jumpTo(0)}>Start Over</button>
                 </div>
             </div>
         );
@@ -129,5 +136,39 @@ function checkSolution(squares){
     }
     return result;
 }
+
+const starterBoards = [
+    [
+        '#ff0000','#ff0000','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#ff0000','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#0000ff','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
+    ],
+    [
+        '#d3d3d3','#d3d3d3','#ff0000','#ff0000',
+        '#d3d3d3','#d3d3d3','#ff0000','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
+        '#0000ff','#d3d3d3','#d3d3d3','#d3d3d3',
+    ],
+    [
+        '#d3d3d3','#d3d3d3','#ff0000','#ff0000',
+        '#d3d3d3','#d3d3d3','#0000ff','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#d3d3d3','#ff0000',
+        '#d3d3d3','#ff0000','#d3d3d3','#d3d3d3',
+    ],
+    [
+        '#d3d3d3','#d3d3d3','#d3d3d3','#0000ff',
+        '#0000ff','#0000ff','#d3d3d3','#d3d3d3',
+        '#0000ff','#d3d3d3','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#ff0000','#d3d3d3','#d3d3d3',
+    ],
+    [
+        '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#ff0000','#d3d3d3',
+        '#0000ff','#0000ff','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#0000ff','#d3d3d3','#d3d3d3',
+    ]
+]
+
 
 export default Game;
