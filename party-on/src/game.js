@@ -18,11 +18,9 @@ class Game extends React.Component {
         const current = history[history.length - 1];
         const squares = current.squares.slice();
 		
-        // if(calculateWinner(squares)) {
+        // if(checkSolution(squares)) {
         //     return;
         // }
-        console.log('squares ', squares[i], 'i', i);
-        if(squares[i] === '#d3d3d3') console.log(squares[i] === '#d3d3d3');
 
         if(squares[i] === '#d3d3d3') {
             squares[i] = '#0000ff';
@@ -33,7 +31,6 @@ class Game extends React.Component {
         else if(squares[i] === '#ff0000') {
             squares[i] = '#d3d3d3';
         }
-        console.log('history', this.state.history);
 
         this.setState({
             history: history.concat([{
@@ -54,7 +51,7 @@ class Game extends React.Component {
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current.squares);
+        const winner = checkSolution(current.squares);
 		
         const moves = history.map((step, move) => {
             const desc = move ? 
@@ -91,7 +88,7 @@ class Game extends React.Component {
     }
 }
 
-function calculateWinner(squares){
+function checkSolution(squares){
     const lines = [
         [0,1,2,3],
         [4,5,6,7],
@@ -102,13 +99,35 @@ function calculateWinner(squares){
         [2,6,10,14],
         [3,7,11,15]
     ];
+    let result;
+
     for(let i = 0; i < lines.length; i++){
         const [a,b,c,d] = lines[i];
-        if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
-            return squares[a];
-        }
+        if( squares[a] !== '#d3d3d3' && squares[a] === squares[b] && squares[b] === squares[c] ) return 'cannot have three squares in a row of the same color';
+        if( squares[b] !== '#d3d3d3' && squares[b] === squares[c] && squares[c] === squares[d] ) return 'cannot have three squares in a row of the same color';
     }
-    return null;
+        
+    if( squares.filter( box => box !== '#d3d3d3' ).length === 16 ) {
+        for( let i = 0; i < lines.length; i++ ){
+            const line = lines[i];
+            const [a,b,c,d] = lines[i];
+            if( line.filter( index => squares[index] === '#0000ff').length !== 2 ) return result = 'lines must have two of each color';
+            if( 0 <= i <= 3 ) {
+                for( let j = 0; j < 3; j++ ) {
+                    const [ e, f, g, h ] = squares[ ( (j < 3) ? j + 1 : 0) ];
+                    if( a === e && b === f && c === g && d === h ) console.log('cannot have two matching lines');
+                }
+            }
+            if (4 <= i <= 7) {
+                for (let j = 4; j < 7; j++) {
+                    const [e, f, g, h] = squares[((j < 7) ? j + 1 : 4)]
+                    if (a === e && b === f && c === g && d === h) console.log('cannot have two matching lines');
+                }
+            }
+        }
+        result = 'winner';
+    }
+    return result;
 }
 
 export default Game;

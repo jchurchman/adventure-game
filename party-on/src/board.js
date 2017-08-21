@@ -11,7 +11,6 @@ class Board extends React.Component {
             value={this.props.squares[i]}
             onClick={(i) => this.props.onClick(i)}
             color={this.props.squares[i]}
-            /* style={{ backgroundColor: this.props.squares[i]}} */
         />
         );
     }
