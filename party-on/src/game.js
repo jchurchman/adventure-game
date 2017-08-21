@@ -36,7 +36,7 @@ class Game extends React.Component {
             history: history.concat([{
                 squares: squares,
             }]),
-            stepNumber: history.length,
+            // stepNumber: history.length,
         });
     }
     
@@ -50,26 +50,26 @@ class Game extends React.Component {
     jumpTo(step){
         const timeWarp = this.state.history.slice(0, (step) ? step : 1);
         this.setState({
-            stepNumber: step,
+            // stepNumber: step,
             history: timeWarp
         });
     }
 	
     render() {
         const history = this.state.history;
-        const current = history[this.state.stepNumber];
+        const current = history[this.state.history.length - 1];
         const winner = checkSolution(current.squares);
 		
-        const moves = history.map((step, move) => {
-            const desc = move ? 
-                'move #' + move :
-                'game start';
-            return (
-                <li key={move}>
-                    <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
-                </li>
-            );
-        });
+        // const moves = history.map((step, move) => {
+        //     const desc = move ? 
+        //         'move #' + move :
+        //         'game start';
+        //     return (
+        //         <li key={move}>
+        //             <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+        //         </li>
+        //     );
+        // });
         let status;
 		
         if(winner === 'winner') {
@@ -87,7 +87,8 @@ class Game extends React.Component {
                 <div className="game-info">
                     <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    
+                    <button onClick={() => this.jumpTo(history.length - 1)}>Undo</button>
                     <button onClick={() => this.jumpTo(0)}>Start Over</button>
                 </div>
             </div>
