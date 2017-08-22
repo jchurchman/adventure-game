@@ -9,7 +9,6 @@ export default function Square(props){
             onClick={(event) => props.onClick(event.target.id)}
             style={{ backgroundColor: props.color}}
         >
-
         </button>
     );
 }

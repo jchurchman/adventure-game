@@ -11,7 +11,8 @@ class Game extends React.Component {
             currentPuzzleIndex: null,
             locked: [],
             stepNumber: 0,
-            puzzlesSolved: 0
+            puzzlesSolved: 0,
+            showHelp: false
         };
     }
 
@@ -22,6 +23,7 @@ class Game extends React.Component {
         const locked = this.state.locked;
 
         if( locked.indexOf(parseInt(i, 10)) !== -1 ) {
+            //animation here??
             return;
         }
 		
@@ -34,9 +36,9 @@ class Game extends React.Component {
             squares[i] = '#4284D3';
         }
         else if(squares[i] === '#4284D3') {
-            squares[i] = '#FF2300';
+            squares[i] = '#FF1E00';
         }
-        else if(squares[i] === '#FF2300') {
+        else if(squares[i] === '#FF1E00') {
             squares[i] = '#d3d3d3';
         }
 
@@ -108,7 +110,7 @@ class Game extends React.Component {
         const history = this.state.history;
         const current = history[this.state.history.length - 1];
         const winner = checkSolution(current.squares);
-        
+
         let status;
 
         if(winner === 'winner') {
@@ -137,7 +139,15 @@ class Game extends React.Component {
                     <div className="errors">{status}</div>
                     <button className="navigation" onClick={() => this.jumpTo(history.length - 1)}>Undo</button>
                     <button className="navigation" onClick={() => this.jumpTo(0)}>Start Over</button>
+                    <button className="navigation" onClick={() => this.setState({showHelp: !this.state.showHelp})}>How to Play</button>
                     <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
+                </div>
+                <div>{this.state.showHelp && 
+                    <p>Fill in all of the squares to move to the next round.
+                        <li>No two rows are the same.</li> 
+                        <li>Three squares of the same color are not allowed next to each other. </li> 
+                    </p>
+                }
                 </div>
             </div>
         );
@@ -159,25 +169,25 @@ function checkSolution(squares){
 
     for(let i = 0; i < lines.length; i++){
         const [a,b,c,d] = lines[i];
-        if( squares[a] !== '#d3d3d3' && squares[a] === squares[b] && squares[b] === squares[c] ) return result = 'Cannot have three squares in a row of the same color';
-        if( squares[b] !== '#d3d3d3' && squares[b] === squares[c] && squares[c] === squares[d] ) return result = 'Cannot have three squares in a row of the same color';
+        if( squares[a] !== '#d3d3d3' && squares[a] === squares[b] && squares[b] === squares[c] ) return result = 'Three squares of the same color are not allowed next to each other.';
+        if( squares[b] !== '#d3d3d3' && squares[b] === squares[c] && squares[c] === squares[d] ) return result = 'Three squares of the same color are not allowed next to each other.';
     }
         
     if( squares.filter( box => box !== '#d3d3d3' ).length === 16 ) {
         for( let i = 0; i < lines.length; i++ ){
             const line = lines[i];
             const [a,b,c,d] = lines[i];
-            if( line.filter( index => squares[index] === '#4284D3').length !== 2 ) return result = 'Lines must have two of each color';
+            if( line.filter( index => squares[index] === '#4284D3').length !== 2 ) return result = 'Lines must have two of each color.';
             if( 0 <= i <= 3 ) {
                 for( let j = 0; j < 3; j++ ) {
                     const [ e, f, g, h ] = squares[ ( (j < 3) ? j + 1 : 0) ];
-                    if( a === e && b === f && c === g && d === h ) return result = 'Cannot have two matching lines';
+                    if( a === e && b === f && c === g && d === h ) return result = 'No two rows are the same.';
                 }
             }
             if (4 <= i <= 7) {
                 for (let j = 4; j < 7; j++) {
                     const [e, f, g, h] = squares[((j < 7) ? j + 1 : 4)];
-                    if (a === e && b === f && c === g && d === h) return result = 'Cannot have two matching lines';
+                    if (a === e && b === f && c === g && d === h) return result = 'No two rows are the same.';
                 }
             }
         }
@@ -192,32 +202,32 @@ function getRandomIndex() {
 
 const starterBoards = [
     [
-        '#FF2300','#FF2300','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#FF2300','#d3d3d3','#d3d3d3',
+        '#FF1E00','#FF1E00','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3',
         '#d3d3d3','#d3d3d3','#4284D3','#d3d3d3',
         '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
     ],
     [
-        '#d3d3d3','#d3d3d3','#FF2300','#FF2300',
-        '#d3d3d3','#d3d3d3','#FF2300','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#FF1E00','#FF1E00',
+        '#d3d3d3','#d3d3d3','#FF1E00','#d3d3d3',
         '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
         '#4284D3','#d3d3d3','#d3d3d3','#d3d3d3',
     ],
     [
-        '#d3d3d3','#d3d3d3','#FF2300','#FF2300',
+        '#d3d3d3','#d3d3d3','#FF1E00','#FF1E00',
         '#d3d3d3','#d3d3d3','#4284D3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#d3d3d3','#FF2300',
-        '#d3d3d3','#FF2300','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#d3d3d3','#FF1E00',
+        '#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3',
     ],
     [
         '#d3d3d3','#d3d3d3','#d3d3d3','#4284D3',
         '#4284D3','#4284D3','#d3d3d3','#d3d3d3',
         '#4284D3','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#FF2300','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3',
     ],
     [
         '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#FF2300','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#FF1E00','#d3d3d3',
         '#4284D3','#4284D3','#d3d3d3','#d3d3d3',
         '#d3d3d3','#4284D3','#d3d3d3','#d3d3d3',
     ]
