@@ -104,6 +104,7 @@ class Game extends React.Component {
     }
 
     render() {
+        const header = <h1> Party Logic </h1>
         const history = this.state.history;
         const current = history[this.state.history.length - 1];
         const winner = checkSolution(current.squares);
@@ -123,6 +124,9 @@ class Game extends React.Component {
         
         return (
             <div className="game">
+                <div>
+                    {header}
+                </div>
                 <div className="game-board">
                     <Board 
                         squares={current.squares}
