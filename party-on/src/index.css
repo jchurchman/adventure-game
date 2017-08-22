@@ -3,10 +3,6 @@ body {
   margin: 20px;
 }
 
-ol, ul {
-  padding-left: 30px;
-}
-
 .board-row:after {
   clear: both;
   content: "";
@@ -31,6 +27,7 @@ ol, ul {
   text-align: center;
   width: 100px;
   height: 100px;
+  box-shadow: inset 10px -10px 25px 1px rgba(0,0,0,0.1);
 }
 
 .square:focus {
@@ -48,10 +45,22 @@ ol, ul {
 }
 
 .game-info {
-  font-family: 'Asap Condensed', sans-serif;
-  font-size: 24px;
-  margin-top: 50px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  margin-top: 30px;
   text-align: center;
+}
+
+.errors {
+  font-family: 'Passion One', sans-serif;
+  font-size: 25px;
+  /* text-transform: uppercase; */
+  /* font-family: 'Raleway', sans-serif;
+  font-weight: 800;
+  font-size: 15px; */
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 h1 {
@@ -61,15 +70,18 @@ h1 {
   font-size: 48px;
 }
 
-button {
+.navigation {
   border-radius: 4px;
-  background-color: grey;
+  background-color: black;
   color: white;
   text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-  font-size: 75%;
+  margin: 20px 10px;
+  border: none;
+  padding: 10px 20px;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
-button:hover {
-  background-color: rgba(0,0,0,0.6);
-
+.navigation:hover {
+  background-color: rgba(140, 140, 140, 0.60);
 }

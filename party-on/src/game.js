@@ -31,12 +31,12 @@ class Game extends React.Component {
         }
 
         if(squares[i] === '#d3d3d3') {
-            squares[i] = '#0000ff';
+            squares[i] = '#4284D3';
         }
-        else if(squares[i] === '#0000ff') {
-            squares[i] = '#ff0000';
+        else if(squares[i] === '#4284D3') {
+            squares[i] = '#FF2300';
         }
-        else if(squares[i] === '#ff0000') {
+        else if(squares[i] === '#FF2300') {
             squares[i] = '#d3d3d3';
         }
 
@@ -104,7 +104,7 @@ class Game extends React.Component {
     }
 
     render() {
-        const header = <h1> Party Logic </h1>
+        const header = <h1> Party Logic </h1>;
         const history = this.state.history;
         const current = history[this.state.history.length - 1];
         const winner = checkSolution(current.squares);
@@ -115,7 +115,7 @@ class Game extends React.Component {
             status =  (
                 <div>
                     <div>You solved it!</div>
-                    <button onClick={() => this.solved()}>Next Game</button>
+                    <button className="navigation" onClick={() => this.solved()}>Next Game</button>
                 </div>
             );
         } else {
@@ -134,10 +134,10 @@ class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
+                    <div className="errors">{status}</div>
+                    <button className="navigation" onClick={() => this.jumpTo(history.length - 1)}>Undo</button>
+                    <button className="navigation" onClick={() => this.jumpTo(0)}>Start Over</button>
                     <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
-                    <button onClick={() => this.jumpTo(history.length - 1)}>Undo</button>
-                    <button onClick={() => this.jumpTo(0)}>Start Over</button>
-                    <div>{status}</div>
                 </div>
             </div>
         );
@@ -159,25 +159,25 @@ function checkSolution(squares){
 
     for(let i = 0; i < lines.length; i++){
         const [a,b,c,d] = lines[i];
-        if( squares[a] !== '#d3d3d3' && squares[a] === squares[b] && squares[b] === squares[c] ) return result = 'cannot have three squares in a row of the same color';
-        if( squares[b] !== '#d3d3d3' && squares[b] === squares[c] && squares[c] === squares[d] ) return result = 'cannot have three squares in a row of the same color';
+        if( squares[a] !== '#d3d3d3' && squares[a] === squares[b] && squares[b] === squares[c] ) return result = 'Cannot have three squares in a row of the same color';
+        if( squares[b] !== '#d3d3d3' && squares[b] === squares[c] && squares[c] === squares[d] ) return result = 'Cannot have three squares in a row of the same color';
     }
         
     if( squares.filter( box => box !== '#d3d3d3' ).length === 16 ) {
         for( let i = 0; i < lines.length; i++ ){
             const line = lines[i];
             const [a,b,c,d] = lines[i];
-            if( line.filter( index => squares[index] === '#0000ff').length !== 2 ) return result = 'lines must have two of each color';
+            if( line.filter( index => squares[index] === '#4284D3').length !== 2 ) return result = 'Lines must have two of each color';
             if( 0 <= i <= 3 ) {
                 for( let j = 0; j < 3; j++ ) {
                     const [ e, f, g, h ] = squares[ ( (j < 3) ? j + 1 : 0) ];
-                    if( a === e && b === f && c === g && d === h ) return result = 'cannot have two matching lines';
+                    if( a === e && b === f && c === g && d === h ) return result = 'Cannot have two matching lines';
                 }
             }
             if (4 <= i <= 7) {
                 for (let j = 4; j < 7; j++) {
                     const [e, f, g, h] = squares[((j < 7) ? j + 1 : 4)];
-                    if (a === e && b === f && c === g && d === h) return result = 'cannot have two matching lines';
+                    if (a === e && b === f && c === g && d === h) return result = 'Cannot have two matching lines';
                 }
             }
         }
@@ -192,34 +192,34 @@ function getRandomIndex() {
 
 const starterBoards = [
     [
-        '#ff0000','#ff0000','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#ff0000','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#0000ff','#d3d3d3',
+        '#FF2300','#FF2300','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#FF2300','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#4284D3','#d3d3d3',
         '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
     ],
     [
-        '#d3d3d3','#d3d3d3','#ff0000','#ff0000',
-        '#d3d3d3','#d3d3d3','#ff0000','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#FF2300','#FF2300',
+        '#d3d3d3','#d3d3d3','#FF2300','#d3d3d3',
         '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#0000ff','#d3d3d3','#d3d3d3','#d3d3d3',
+        '#4284D3','#d3d3d3','#d3d3d3','#d3d3d3',
     ],
     [
-        '#d3d3d3','#d3d3d3','#ff0000','#ff0000',
-        '#d3d3d3','#d3d3d3','#0000ff','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#d3d3d3','#ff0000',
-        '#d3d3d3','#ff0000','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#FF2300','#FF2300',
+        '#d3d3d3','#d3d3d3','#4284D3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#d3d3d3','#FF2300',
+        '#d3d3d3','#FF2300','#d3d3d3','#d3d3d3',
     ],
     [
-        '#d3d3d3','#d3d3d3','#d3d3d3','#0000ff',
-        '#0000ff','#0000ff','#d3d3d3','#d3d3d3',
-        '#0000ff','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#ff0000','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#d3d3d3','#4284D3',
+        '#4284D3','#4284D3','#d3d3d3','#d3d3d3',
+        '#4284D3','#d3d3d3','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#FF2300','#d3d3d3','#d3d3d3',
     ],
     [
         '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#ff0000','#d3d3d3',
-        '#0000ff','#0000ff','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#0000ff','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#d3d3d3','#FF2300','#d3d3d3',
+        '#4284D3','#4284D3','#d3d3d3','#d3d3d3',
+        '#d3d3d3','#4284D3','#d3d3d3','#d3d3d3',
     ]
 ];
 
