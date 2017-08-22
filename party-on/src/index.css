@@ -1,5 +1,96 @@
 body {
-  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  margin: 20px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  border: 2px solid white;
+  border-radius: 10%;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
   padding: 0;
-  font-family: sans-serif;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  box-shadow: inset 10px -10px 30px 2px rgba(0,0,0,0.1);
+}
+
+.square:focus {
+  outline: none;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.game-board {
+  margin: 0 auto;
+}
+
+.game-info {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.errors {
+  font-family: 'Passion One', sans-serif;
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-family: 'Passion One', cursive;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 48px;
+}
+
+.navigation {
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  background-color: black;
+  color: white;
+  margin: 20px 10px;
+  border: none;
+  padding: 10px 20px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.navigation:hover {
+  background-color: #4284D3;
+}
+.navigation:focus {
+  outline: 0;
+}
+
+li {
+  list-style-type: none;
 }
