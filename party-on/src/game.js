@@ -117,6 +117,8 @@ class Game extends React.Component {
                     <button onClick={() => this.solved()}>Next Game</button>
                 </div>
             );
+        } else {
+            status = winner;
         }
         
         return (
@@ -153,8 +155,8 @@ function checkSolution(squares){
 
     for(let i = 0; i < lines.length; i++){
         const [a,b,c,d] = lines[i];
-        if( squares[a] !== '#d3d3d3' && squares[a] === squares[b] && squares[b] === squares[c] ) return 'cannot have three squares in a row of the same color';
-        if( squares[b] !== '#d3d3d3' && squares[b] === squares[c] && squares[c] === squares[d] ) return 'cannot have three squares in a row of the same color';
+        if( squares[a] !== '#d3d3d3' && squares[a] === squares[b] && squares[b] === squares[c] ) return result = 'cannot have three squares in a row of the same color';
+        if( squares[b] !== '#d3d3d3' && squares[b] === squares[c] && squares[c] === squares[d] ) return result = 'cannot have three squares in a row of the same color';
     }
         
     if( squares.filter( box => box !== '#d3d3d3' ).length === 16 ) {
@@ -165,13 +167,13 @@ function checkSolution(squares){
             if( 0 <= i <= 3 ) {
                 for( let j = 0; j < 3; j++ ) {
                     const [ e, f, g, h ] = squares[ ( (j < 3) ? j + 1 : 0) ];
-                    if( a === e && b === f && c === g && d === h ) console.log('cannot have two matching lines');
+                    if( a === e && b === f && c === g && d === h ) return result = 'cannot have two matching lines';
                 }
             }
             if (4 <= i <= 7) {
                 for (let j = 4; j < 7; j++) {
                     const [e, f, g, h] = squares[((j < 7) ? j + 1 : 4)];
-                    if (a === e && b === f && c === g && d === h) console.log('cannot have two matching lines');
+                    if (a === e && b === f && c === g && d === h) return result = 'cannot have two matching lines';
                 }
             }
         }
