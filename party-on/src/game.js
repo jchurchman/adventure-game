@@ -6,8 +6,9 @@ class Game extends React.Component {
         super();
         this.state = {
             history: [{
-                squares: starterBoards[Math.floor(Math.random()*5)],
+                squares: [],
             }],
+            currentPuzzleIndex: null,
             stepNumber: 0,
             puzzlesSolved: 0
         };
@@ -19,6 +20,7 @@ class Game extends React.Component {
         const squares = current.squares.slice();
 		
         if(checkSolution(squares) === 'winner') {
+            this.solved();
             return;
         }
 
@@ -36,44 +38,58 @@ class Game extends React.Component {
             history: history.concat([{
                 squares: squares,
             }]),
-            // stepNumber: history.length,
         });
     }
     
     solved(){
-        let figuredOut = this.state.puzzlesSolved + 1;
+        const figuredOut = this.state.puzzlesSolved + 1;
+        let num = getRandomIndex();
+        if( num === this.state.currentPuzzleIndex ) {
+            num = getRandomIndex();
+        }
         this.setState({
             puzzlesSolved: figuredOut,
+            history: [{
+                squares: starterBoards[num],
+            }],
+            currentPuzzleIndex: num
+            
         });
     }
 
     jumpTo(step){
         const timeWarp = this.state.history.slice(0, (step) ? step : 1);
         this.setState({
-            // stepNumber: step,
             history: timeWarp
         });
     }
-	
+    
+    componentWillMount() {
+        if( !this.state.history[0].squares.length ) {
+            const num = getRandomIndex();
+            this.setState({
+                history: [{
+                    squares: starterBoards[num],
+                }],
+                currentPuzzleIndex: num
+            });
+        }
+    }
+
     render() {
         const history = this.state.history;
         const current = history[this.state.history.length - 1];
         const winner = checkSolution(current.squares);
-		
-        // const moves = history.map((step, move) => {
-        //     const desc = move ? 
-        //         'move #' + move :
-        //         'game start';
-        //     return (
-        //         <li key={move}>
-        //             <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
-        //         </li>
-        //     );
-        // });
+        
         let status;
-		
+
         if(winner === 'winner') {
-            status = 'winner:' + winner;
+            status =  (
+                <div>
+                    <div>You solved it!</div>
+                    <button onClick={() => this.solved()}>Next Game</button>
+                </div>
+            );
         }
         
         return (
@@ -86,10 +102,9 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
-                    <div>{status}</div>
-                    
                     <button onClick={() => this.jumpTo(history.length - 1)}>Undo</button>
                     <button onClick={() => this.jumpTo(0)}>Start Over</button>
+                    <div>{status}</div>
                 </div>
             </div>
         );
@@ -136,6 +151,10 @@ function checkSolution(squares){
         result = 'winner';
     }
     return result;
+}
+
+function getRandomIndex() {
+    return Math.floor(Math.random()*5)
 }
 
 const starterBoards = [
