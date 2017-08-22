@@ -178,14 +178,14 @@ function checkSolution(squares){
             const [a,b,c,d] = lines[i];
             if( line.filter( index => squares[index] === '#4284D3').length !== 2 ) return result = 'Lines must have two of each color.';
             if( 0 <= i <= 3 ) {
-                for( let j = 0; j < 3; j++ ) {
-                    const [ e, f, g, h ] = squares[ ( (j < 3) ? j + 1 : 0) ];
+                for( let j = i + 1; j < 4; j++ ) {
+                    const [ e, f, g, h ] = lines[ (( j < 4) ? j + 1 : 0) ];
                     if( a === e && b === f && c === g && d === h ) return result = 'No two rows are the same.';
                 }
             }
             if (4 <= i <= 7) {
-                for (let j = 4; j < 7; j++) {
-                    const [e, f, g, h] = squares[((j < 7) ? j + 1 : 4)];
+                for (let j = i + 4; j < 7; j++) {
+                    const [e, f, g, h] = lines[((j < 7) ? j + 1 : 4)];
                     if (a === e && b === f && c === g && d === h) return result = 'No two rows are the same.';
                 }
             }
