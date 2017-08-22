@@ -9,6 +9,7 @@ class Game extends React.Component {
                 squares: [],
             }],
             currentPuzzleIndex: null,
+            locked: [],
             stepNumber: 0,
             puzzlesSolved: 0
         };
@@ -18,6 +19,11 @@ class Game extends React.Component {
         const history = this.state.history;
         const current = history[history.length - 1];
         const squares = current.squares.slice();
+        const locked = this.state.locked;
+
+        if( locked.indexOf(parseInt(i, 10)) !== -1 ) {
+            return;
+        }
 		
         if(checkSolution(squares) === 'winner') {
             this.solved();
@@ -47,13 +53,23 @@ class Game extends React.Component {
         if( num === this.state.currentPuzzleIndex ) {
             num = getRandomIndex();
         }
+        
+        let starters = [];
+        starterBoards[num].forEach( (val, index) => {
+            if( val !== '#d3d3d3' ) {
+                return starters.push(index);
+            } else {
+                return null;
+            }
+        });
+
         this.setState({
             puzzlesSolved: figuredOut,
             history: [{
                 squares: starterBoards[num],
             }],
-            currentPuzzleIndex: num
-            
+            currentPuzzleIndex: num,
+            locked: starters          
         });
     }
 
@@ -67,11 +83,22 @@ class Game extends React.Component {
     componentWillMount() {
         if( !this.state.history[0].squares.length ) {
             const num = getRandomIndex();
+
+            let starters = [];
+            starterBoards[num].forEach( (val, index) => {
+                if( val !== '#d3d3d3' ) {
+                    return starters.push(index);
+                } else {
+                    return null;
+                }
+            });
+
             this.setState({
                 history: [{
                     squares: starterBoards[num],
                 }],
-                currentPuzzleIndex: num
+                currentPuzzleIndex: num,
+                locked: starters
             });
         }
     }
@@ -143,7 +170,7 @@ function checkSolution(squares){
             }
             if (4 <= i <= 7) {
                 for (let j = 4; j < 7; j++) {
-                    const [e, f, g, h] = squares[((j < 7) ? j + 1 : 4)]
+                    const [e, f, g, h] = squares[((j < 7) ? j + 1 : 4)];
                     if (a === e && b === f && c === g && d === h) console.log('cannot have two matching lines');
                 }
             }
@@ -154,7 +181,7 @@ function checkSolution(squares){
 }
 
 function getRandomIndex() {
-    return Math.floor(Math.random()*5)
+    return Math.floor(Math.random()*5);
 }
 
 const starterBoards = [
@@ -188,7 +215,7 @@ const starterBoards = [
         '#0000ff','#0000ff','#d3d3d3','#d3d3d3',
         '#d3d3d3','#0000ff','#d3d3d3','#d3d3d3',
     ]
-]
+];
 
 
 export default Game;
