@@ -20,10 +20,9 @@ class Game extends React.Component {
         const history = this.state.history;
         const current = history[history.length - 1];
         const squares = current.squares.slice();
-        const locked = this.state.locked;
+        let locked = this.state.locked;
 
         if( locked.indexOf(parseInt(i, 10)) !== -1 ) {
-            //animation here??
             return;
         }
 		
