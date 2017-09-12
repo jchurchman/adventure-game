@@ -138,16 +138,16 @@ class Game extends React.Component {
                     <div className="errors">{status}</div>
                     <button className="navigation" onClick={() => this.jumpTo(history.length - 1)}>Undo</button>
                     <button className="navigation" onClick={() => this.jumpTo(0)}>Start Over</button>
-                    <button className="navigation" onClick={() => this.setState({showHelp: !this.state.showHelp})}>How to Play</button>
+                    {/* <button className="navigation" onClick={() => this.setState({showHelp: !this.state.showHelp})}>How to Play</button> */}
                     <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
                 </div>
-                <div>{this.state.showHelp && 
+                {/* <div>{this.state.showHelp && 
                     <p>Fill in all of the squares to move to the next round.
                         <li>No two rows are the same.</li> 
                         <li>Three squares of the same color are not allowed next to each other. </li> 
                     </p>
                 }
-                </div>
+                </div> */}
             </div>
         );
     }
@@ -180,12 +180,14 @@ function checkSolution(squares){
             if( 0 <= i <= 3 ) {
                 for( let j = i + 1; j < 4; j++ ) {
                     const [ e, f, g, h ] = lines[ (( j < 4) ? j + 1 : 0) ];
+                    console.log('abcd',a,b,c,d, 'efgh', e,f,g,h, 'i', i, 'j', j);                    
                     if( a === e && b === f && c === g && d === h ) return result = 'No two rows are the same.';
                 }
             }
             if (4 <= i <= 7) {
                 for (let j = i + 4; j < 7; j++) {
                     const [e, f, g, h] = lines[((j < 7) ? j + 1 : 4)];
+                    console.log('abcd',a,b,c,d, 'efgh', e,f,g,h, 'i', i, 'j', j);                    
                     if (a === e && b === f && c === g && d === h) return result = 'No two rows are the same.';
                 }
             }
