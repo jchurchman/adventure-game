@@ -12,10 +12,6 @@ const HomePage = styled.div`
     margin: 0 auto;
     text-align: center;
     margin-top: 220px;
-    
-    :focus {
-        outline: none;
-    }
 `;
 
 const Instructions = styled.div`
@@ -38,6 +34,9 @@ const HomeButton = styled.button`
     padding: 10px 20px;
     font-size: 12px;
     text-transform: uppercase;
+    :focus {
+        outline: none;
+    }
 `;
 
 const ButtonWhite = styled.button`
@@ -54,13 +53,18 @@ const ButtonWhite = styled.button`
     padding: 10px 20px;
     font-size: 12px;
     text-transform: uppercase;
+    :focus {
+        outline: none;
+    }
 `;
 
 function Home() {
     return (
         <div>
             <HomePage>
-                <h1>Welcome to Party Logic</h1>
+                {/* <h1>Welcome to Party Logic</h1> */}
+                <p style={{fontSize: 60, fontFamily:'Bungee Inline' }}>Welcome to Party Logic</p>
+
                 <HomeButton>
                     <Link to="/howtoplay" style={{ textDecoration: 'none', color: 'white' }}>
                         How to Play
@@ -85,7 +89,7 @@ function About(){
     return(
         <div>
             <Centered>
-                <h1>About</h1>
+                <p style={{fontSize: 60, fontFamily:'Bungee Inline' }}>About</p>
                 Party Logic was created by Joe Churchman & Meryl Turner.
                 {/* create links of github accounts */}
                 <hr style={{ width: 500, marginTop: 20 }}/>
@@ -104,17 +108,17 @@ function GameComponent() {
         <div>
             <Centered>
                 <ButtonWhite>
-                    <Link to="/howtoplay" style={{ textDecoration: 'none' }}>
+                    <Link to="/howtoplay" style={{ textDecoration: 'none', color: 'black' }}>
                         How to Play
                     </Link>
                 </ButtonWhite>
                 <ButtonWhite>
-                    <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
                         Home
                     </Link>
                 </ButtonWhite>
                 <ButtonWhite>
-                    <Link to="/about" style={{ textDecoration: 'none' }}>
+                    <Link to="/about" style={{ textDecoration: 'none', color: 'black' }}>
                     About
                     </Link>
                 </ButtonWhite>
@@ -127,7 +131,8 @@ function HowToPlay() {
     return (
         <div>
             <Instructions>
-                <h1>How to Play</h1>
+                {/* <h1>How to Play</h1> */}
+                <p style={{fontSize: 60, fontFamily:'Bungee Inline' }}>How to Play</p>
                 <p>Fill in all of the squares to move to the next round.
                     <li>No two rows are the same.</li>
                     <li>Three squares of the same color are not allowed next to each other. </li>
