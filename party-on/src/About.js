@@ -25,7 +25,7 @@ export const About = () => {
                 Meryl Turner.
                 </a>
                 </p>
-                <hr style={{ width: 500, marginTop: 20 }}/>
+                {/* <hr style={{ width: 500, marginTop: 20, borderColor:'#4284D3' }}/> */}
                 <HomeButton>
                     <Link to="/howtoplay" style={{ textDecoration: 'none', color: 'white' }}>
                         How to Play
