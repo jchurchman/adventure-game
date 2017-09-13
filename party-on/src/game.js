@@ -1,5 +1,27 @@
 import React from 'react';
 import Board from './board';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const ButtonWhite = styled.button`
+cursor: pointer;
+font-family: 'Raleway', sans-serif;
+font-weight: 700;
+font-size: 15px;
+color: black;
+background-color: white;
+letter-spacing: 1px;
+border-radius: 4px;
+margin: 20px 10px;
+border: none;
+padding: 10px 20px;
+font-size: 12px;
+text-transform: uppercase;
+&:focus {
+    outline: none;
+}
+`;
+
 
 class Game extends React.Component {
     constructor(){
@@ -105,7 +127,8 @@ class Game extends React.Component {
     }
 
     render() {
-        const header = <h1> Party Logic </h1>;
+        // const header = <p style={{fontSize: 60, fontFamily:'Bungee Shade', color: 'black', textTransform: 'uppercase', margin: '0 auto' }}>PL</p>;
+        
         const history = this.state.history;
         const current = history[this.state.history.length - 1];
         const winner = checkSolution(current.squares);
@@ -125,9 +148,9 @@ class Game extends React.Component {
         
         return (
             <div className="game">
-                <div>
+                {/* <div>
                     {header}
-                </div>
+                </div> */}
                 <div className="game-board">
                     <Board 
                         squares={current.squares}
@@ -141,13 +164,13 @@ class Game extends React.Component {
                     {/* <button className="navigation" onClick={() => this.setState({showHelp: !this.state.showHelp})}>How to Play</button> */}
                     <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
                 </div>
-                {/* <div>{this.state.showHelp && 
-                    <p>Fill in all of the squares to move to the next round.
-                        <li>No two rows are the same.</li> 
-                        <li>Three squares of the same color are not allowed next to each other. </li> 
-                    </p>
-                }
-                </div> */}
+                <div>
+                <ButtonWhite>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+                        Home
+                    </Link>
+                </ButtonWhite>
+                </div>
             </div>
         );
     }
