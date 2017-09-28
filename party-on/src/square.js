@@ -2,13 +2,14 @@ import React from 'react';
 
 export default function Square(props){
     return (
-        <button 
+        <td 
             className="square" 
             value={props.value}
-            id={props.index}
-            onClick={(event) => props.onClick(event.target.id)}
-            style={{ backgroundColor: props.color}}
+            x={props.x}
+            y={props.y}
+            onClick={(event) => props.onClick(event.target)}
+            style={{ backgroundColor: props.value}}
         >
-        </button>
+        </td>
     );
 }

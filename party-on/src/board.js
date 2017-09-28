@@ -2,49 +2,29 @@ import React from 'react';
 import Square from './square';
 
 
-class Board extends React.Component {
+function Board (props) {
     
-    renderSquare(i) {
-        return (<Square 
-            key={i}
-            index={i}
-            value={this.props.squares[i]}
-            onClick={(i) => this.props.onClick(i)}
-            color={this.props.squares[i]}
-        />
-        );
-    }
-    
-    render() { 
-        return (
-            <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                    {this.renderSquare(3)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(8)}
-                    {this.renderSquare(9)}
-                    {this.renderSquare(10)}
-                    {this.renderSquare(11)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(12)}
-                    {this.renderSquare(13)}
-                    {this.renderSquare(14)}
-                    {this.renderSquare(15)}
-                </div>
-            </div>
-        );
-    }
+    return (
+        <table>
+            <tbody>
+                {props.squares.map( ( row, index ) => {
+                    return (
+                        <tr y={index} key={index}>
+                            {row.map( ( val, i, row ) => {
+                                return (<Square 
+                                    key={i}
+                                    x={i}
+                                    y={index}
+                                    value={val}
+                                    onClick={props.onClick}
+                                />);}
+                            )}
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </table>
+    );
 }
 
 export default Board;

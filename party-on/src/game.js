@@ -39,6 +39,7 @@ class Game extends React.Component {
     }
 
     handleClick(i){
+        console.log('got clicked!', i);
         const history = this.state.history;
         const current = history[history.length - 1];
         const squares = current.squares.slice();
@@ -118,9 +119,9 @@ class Game extends React.Component {
 
             this.setState({
                 history: [{
-                    squares: starterBoards[num],
+                    squares: starterBoards[0],
                 }],
-                currentPuzzleIndex: num,
+                currentPuzzleIndex: 0,
                 locked: starters
             });
         }
@@ -165,11 +166,11 @@ class Game extends React.Component {
                     <div>Puzzles Solved: {this.state.puzzlesSolved} </div>
                 </div>
                 <div>
-                <ButtonWhite>
-                    <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+                    <ButtonWhite>
+                        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
                         Home
-                    </Link>
-                </ButtonWhite>
+                        </Link>
+                    </ButtonWhite>
                 </div>
             </div>
         );
@@ -226,10 +227,10 @@ function getRandomIndex() {
 
 const starterBoards = [
     [
-        '#FF1E00','#FF1E00','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#4284D3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
+        ['#FF1E00','#FF1E00','#d3d3d3','#d3d3d3'],
+        ['#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3'],
+        ['#d3d3d3','#d3d3d3','#4284D3','#d3d3d3'],
+        ['#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3'],
     ],
     [
         '#d3d3d3','#d3d3d3','#FF1E00','#FF1E00',
