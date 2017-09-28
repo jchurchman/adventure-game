@@ -38,15 +38,19 @@ class Game extends React.Component {
         };
     }
 
-    handleClick({x, y}){
+    handleClick(pos){
+        const { x, y } = pos;
         const history = this.state.history;
         const current = history[history.length - 1];
         const squares = current.squares.slice();
         let locked = this.state.locked;
 
-        // if( locked.indexOf(parseInt(i, 10)) !== -1 ) {
-        //     return;
-        // }
+        function checkLock(position) {
+            return locked[position.y].indexOf(position.x);
+        }
+        if( checkLock(pos) === -1 ) {
+            return;
+        }
 		
         if(checkSolution(squares) === 'winner') {
             this.solved();
@@ -77,13 +81,15 @@ class Game extends React.Component {
             num = getRandomIndex();
         }
         
-        let starters = [];
-        starterBoards[num].forEach( (val, index) => {
-            if( val !== '#d3d3d3' ) {
-                return starters.push(index);
-            } else {
-                return null;
-            }
+        let starters = {};
+        starterBoards[num].forEach( (row, index) => {
+            row.forEach((val, i) => {
+                if( val !== '#d3d3d3' ) {
+                    return starters[index].push(i);
+                } else {
+                    return null;
+                }
+            });
         });
 
         this.setState({
@@ -107,13 +113,15 @@ class Game extends React.Component {
         if( !this.state.history[0].squares.length ) {
             const num = getRandomIndex();
 
-            let starters = [];
-            starterBoards[num].forEach( (val, index) => {
-                if( val !== '#d3d3d3' ) {
-                    return starters.push(index);
-                } else {
-                    return null;
-                }
+            let starters = {};
+            starterBoards[num].forEach( (row, index) => {
+                row.forEach((val, i) => {
+                    if( val !== '#d3d3d3' ) {
+                        starters[index] ? starters[index].push(i) : starters[index] = [i];
+                    } else {
+                        return null;
+                    }
+                });
             });
 
             this.setState({
@@ -232,28 +240,28 @@ const starterBoards = [
         ['#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3'],
     ],
     [
-        '#d3d3d3','#d3d3d3','#FF1E00','#FF1E00',
-        '#d3d3d3','#d3d3d3','#FF1E00','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#4284D3','#d3d3d3','#d3d3d3','#d3d3d3',
+        ['#d3d3d3','#d3d3d3','#FF1E00','#FF1E00'],
+        ['#d3d3d3','#d3d3d3','#FF1E00','#d3d3d3'],
+        ['#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3'],
+        ['#4284D3','#d3d3d3','#d3d3d3','#d3d3d3'],
     ],
     [
-        '#d3d3d3','#d3d3d3','#FF1E00','#FF1E00',
-        '#d3d3d3','#d3d3d3','#4284D3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#d3d3d3','#FF1E00',
-        '#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3',
+        ['#d3d3d3','#d3d3d3','#FF1E00','#FF1E00'],
+        ['#d3d3d3','#d3d3d3','#4284D3','#d3d3d3'],
+        ['#d3d3d3','#d3d3d3','#d3d3d3','#FF1E00'],
+        ['#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3'],
     ],
     [
-        '#d3d3d3','#d3d3d3','#d3d3d3','#4284D3',
-        '#4284D3','#4284D3','#d3d3d3','#d3d3d3',
-        '#4284D3','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3',
+        ['#d3d3d3','#d3d3d3','#d3d3d3','#4284D3'],
+        ['#4284D3','#4284D3','#d3d3d3','#d3d3d3'],
+        ['#4284D3','#d3d3d3','#d3d3d3','#d3d3d3'],
+        ['#d3d3d3','#FF1E00','#d3d3d3','#d3d3d3'],
     ],
     [
-        '#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#d3d3d3','#FF1E00','#d3d3d3',
-        '#4284D3','#4284D3','#d3d3d3','#d3d3d3',
-        '#d3d3d3','#4284D3','#d3d3d3','#d3d3d3',
+        ['#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3'],
+        ['#d3d3d3','#d3d3d3','#FF1E00','#d3d3d3'],
+        ['#4284D3','#4284D3','#d3d3d3','#d3d3d3'],
+        ['#d3d3d3','#4284D3','#d3d3d3','#d3d3d3'],
     ]
 ];
 

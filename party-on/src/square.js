@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Square(props){
-    const {x, y} = props;
+    const { x, y } = props;
     const pos = { x, y };
     return (
         <td 
