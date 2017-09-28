@@ -16,7 +16,9 @@ function Board (props) {
                                     x={i}
                                     y={index}
                                     value={val}
-                                    onClick={props.onClick}
+                                    onSquareClick={(thing) => {
+                                        return props.onSquareClick(thing);
+                                    }}
                                 />);}
                             )}
                         </tr>

@@ -38,30 +38,29 @@ class Game extends React.Component {
         };
     }
 
-    handleClick(i){
-        console.log('got clicked!', i);
+    handleClick({x, y}){
         const history = this.state.history;
         const current = history[history.length - 1];
         const squares = current.squares.slice();
         let locked = this.state.locked;
 
-        if( locked.indexOf(parseInt(i, 10)) !== -1 ) {
-            return;
-        }
+        // if( locked.indexOf(parseInt(i, 10)) !== -1 ) {
+        //     return;
+        // }
 		
         if(checkSolution(squares) === 'winner') {
             this.solved();
             return;
         }
 
-        if(squares[i] === '#d3d3d3') {
-            squares[i] = '#4284D3';
+        if(squares[y][x] === '#d3d3d3') {
+            squares[y][x] = '#4284D3';
         }
-        else if(squares[i] === '#4284D3') {
-            squares[i] = '#FF1E00';
+        else if(squares[y][x] === '#4284D3') {
+            squares[y][x] = '#FF1E00';
         }
-        else if(squares[i] === '#FF1E00') {
-            squares[i] = '#d3d3d3';
+        else if(squares[y][x] === '#FF1E00') {
+            squares[y][x] = '#d3d3d3';
         }
 
         this.setState({
@@ -155,7 +154,7 @@ class Game extends React.Component {
                 <div className="game-board">
                     <Board 
                         squares={current.squares}
-                        onClick={(i) => this.handleClick(i)}
+                        onSquareClick={(i) => this.handleClick(i)}
                     />
                 </div>
                 <div className="game-info">
