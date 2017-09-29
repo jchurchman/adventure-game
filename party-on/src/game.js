@@ -39,6 +39,7 @@ class Game extends React.Component {
     }
 
     handleClick(pos){
+
         const { x, y } = pos;
         const history = this.state.history;
         const current = history[history.length - 1];
@@ -46,9 +47,10 @@ class Game extends React.Component {
         let locked = this.state.locked;
 
         function checkLock(position) {
+            if(!locked[pos.y]) return -1;
             return locked[position.y].indexOf(position.x);
         }
-        if( checkLock(pos) === -1 ) {
+        if( checkLock(pos) > -1 ) {
             return;
         }
 		
@@ -126,9 +128,9 @@ class Game extends React.Component {
 
             this.setState({
                 history: [{
-                    squares: starterBoards[0],
+                    squares: starterBoards[num],
                 }],
-                currentPuzzleIndex: 0,
+                currentPuzzleIndex: num,
                 locked: starters
             });
         }
