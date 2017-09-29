@@ -27,9 +27,7 @@ class Game extends React.Component {
     constructor(){
         super();
         this.state = {
-            history: [{
-                squares: [],
-            }],
+            history: [],
             currentPuzzleIndex: null,
             locked: [],
             stepNumber: 0,
@@ -43,7 +41,7 @@ class Game extends React.Component {
         const { x, y } = pos;
         const history = this.state.history;
         const current = history[history.length - 1];
-        const squares = current.squares.slice();
+        const squares = current.slice();
         let locked = this.state.locked;
 
         function checkLock(position) {
@@ -70,9 +68,9 @@ class Game extends React.Component {
         }
 
         this.setState({
-            history: history.concat([{
-                squares: squares,
-            }]),
+            history: history.concat([
+                squares
+            ]),
         });
     }
     
@@ -87,7 +85,7 @@ class Game extends React.Component {
         starterBoards[num].forEach( (row, index) => {
             row.forEach((val, i) => {
                 if( val !== '#d3d3d3' ) {
-                    return starters[index].push(i);
+                    starters[index] ? starters[index].push(i) : starters[index] = [i];
                 } else {
                     return null;
                 }
@@ -96,9 +94,7 @@ class Game extends React.Component {
 
         this.setState({
             puzzlesSolved: figuredOut,
-            history: [{
-                squares: starterBoards[num],
-            }],
+            history: [ starterBoards[num] ],
             currentPuzzleIndex: num,
             locked: starters          
         });
@@ -112,7 +108,7 @@ class Game extends React.Component {
     }
     
     componentWillMount() {
-        if( !this.state.history[0].squares.length ) {
+        if( !this.state.history[0] ) {
             const num = getRandomIndex();
 
             let starters = {};
@@ -127,9 +123,7 @@ class Game extends React.Component {
             });
 
             this.setState({
-                history: [{
-                    squares: starterBoards[num],
-                }],
+                history: [ starterBoards[num] ],
                 currentPuzzleIndex: num,
                 locked: starters
             });
@@ -141,7 +135,7 @@ class Game extends React.Component {
         
         const history = this.state.history;
         const current = history[this.state.history.length - 1];
-        const winner = checkSolution(current.squares);
+        const winner = checkSolution(current);
 
         let status;
 
@@ -163,7 +157,7 @@ class Game extends React.Component {
                 </div> */}
                 <div className="game-board">
                     <Board 
-                        squares={current.squares}
+                        current={current}
                         onSquareClick={(i) => this.handleClick(i)}
                     />
                 </div>

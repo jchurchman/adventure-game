@@ -3,11 +3,12 @@ import Square from './square';
 
 
 function Board (props) {
+    console.log(props);
     
     return (
         <table>
             <tbody>
-                {props.squares.map( ( row, index ) => {
+                {props.current.map( ( row, index ) => {
                     return (
                         <tr y={index} key={index}>
                             {row.map( ( val, i, row ) => {
